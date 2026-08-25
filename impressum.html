@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impressum — Voltra Digital</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: { DEFAULT: '#0F172A', light: '#1E293B' },
+          indigo: { DEFAULT: '#6366F1', dark: '#4F46E5' },
+          volt: { DEFAULT: '#F59E0B', light: '#FBBF24' },
+          emerald: { DEFAULT: '#10B981' },
+          slate: { bg: '#F8FAFC' }
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+</style>
+</head>
+<body class="text-navy antialiased">
+
+<header class="border-b border-navy/5 bg-white">
+  <nav class="max-w-3xl mx-auto px-6 h-16 flex items-center gap-2">
+    <a href="/" class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#F59E0B" stroke="#0F172A" stroke-width="0.5" stroke-linejoin="round"/></svg>
+      <span class="font-display font-700 text-lg">Voltra <span class="text-indigo-dark">Digital</span></span>
+    </a>
+  </nav>
+</header>
+
+<main class="max-w-3xl mx-auto px-6 py-16">
+  <a href="/" class="font-mono text-sm text-indigo-dark hover:underline">&larr; Zurück zur Startseite</a>
+
+  <h1 class="font-display font-700 text-3xl sm:text-4xl mt-6 mb-10 tracking-tight">Impressum</h1>
+
+  <section class="mb-10">
+    <h2 class="font-display font-600 text-lg mb-3">Angaben gemäss Art. 3 UWG</h2>
+    <p class="leading-relaxed text-navy-light/80">
+      Eduard Kaba<br>
+      Tannmattstrasse 4<br>
+      8902 Urdorf<br>
+      Schweiz
+    </p>
+    <p class="mt-4 leading-relaxed text-navy-light/80">
+      Diese Website wird als Einzelperson betrieben (Einzelunternehmen in Gründung, noch nicht im
+      Handelsregister eingetragen) unter der Marke "Voltra Digital".
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-display font-600 text-lg mb-3">Kontakt</h2>
+    <p class="leading-relaxed text-navy-light/80 font-mono text-sm">
+      E-Mail: eduard.kaba@voltradigital.ch<br>
+      Telefon: +41 76 366 25 01
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-display font-600 text-lg mb-3">Haftungsausschluss</h2>
+    <p class="leading-relaxed text-navy-light/80">
+      Für die Richtigkeit, Vollständigkeit und Aktualität der auf dieser Website bereitgestellten
+      Inhalte wird keine Gewähr übernommen. Haftungsansprüche gegen den Betreiber, welche sich auf
+      Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der
+      dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger
+      Informationen verursacht wurden, sind grundsätzlich ausgeschlossen.
+    </p>
+    <p class="mt-4 leading-relaxed text-navy-light/80">
+      Diese Website kann Links zu externen Websites Dritter enthalten, auf deren Inhalte kein
+      Einfluss besteht. Für diese fremden Inhalte übernimmt der Betreiber keine Gewähr.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="font-display font-600 text-lg mb-3">Urheberrecht</h2>
+    <p class="leading-relaxed text-navy-light/80">
+      Die auf dieser Website veröffentlichten Inhalte und Werke unterliegen dem Schweizer
+      Urheberrecht. Jede Verwertung, die nicht durch das Urheberrecht gestattet ist, bedarf der
+      vorherigen schriftlichen Zustimmung.
+    </p>
+  </section>
+</main>
+
+<footer class="border-t border-navy/5 py-8 mt-8">
+  <div class="max-w-3xl mx-auto px-6 flex flex-wrap gap-6 text-xs font-mono text-navy-light/60">
+    <a href="/" class="hover:text-navy">Startseite</a>
+    <a href="/datenschutz.html" class="hover:text-navy">Datenschutz</a>
+  </div>
+</footer>
+
+</body>
+</html>
