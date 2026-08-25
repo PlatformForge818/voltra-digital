@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voltra Digital — Webseiten &amp; Prozessautomatisierung für Schweizer KMUs</title>
+<meta name="description" content="Voltra Digital baut High-Speed Webseiten und B2B-Prozessautomatisierung für Schweizer KMUs. Transparente Festpreise, 100% nDSG-konform, Ladezeiten unter 1 Sekunde.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: { DEFAULT: '#0F172A', light: '#1E293B' },
+          indigo: { DEFAULT: '#6366F1', dark: '#4F46E5' },
+          volt: { DEFAULT: '#F59E0B', light: '#FBBF24' },
+          emerald: { DEFAULT: '#10B981' },
+          slate: { bg: '#F8FAFC' }
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(99,102,241,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+  @keyframes bolt-flicker {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
+    50% { filter: drop-shadow(0 0 14px rgba(245,158,11,0.95)); }
+  }
+  .bolt-flicker { animation: bolt-flicker 2.4s ease-in-out infinite; }
+
+  .gauge-ring {
+    transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(15,23,42,0.15); }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  ::selection { background: #FBBF24; color: #0F172A; }
+</style>
+</head>
+
+<body class="text-navy antialiased">
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-slate-bg/80 backdrop-blur-md border-b border-navy/5">
+  <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-18 flex items-center justify-between py-4">
+    <a href="#top" class="flex items-center gap-2 group">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" class="bolt-flicker">
+        <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#F59E0B" stroke="#0F172A" stroke-width="0.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="font-display font-700 text-lg tracking-tight">Voltra <span class="text-indigo-dark">Digital</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 font-body text-sm font-medium text-navy-light">
+      <a href="#leistungen" class="hover:text-indigo-dark transition-colors">Leistungen</a>
+      <a href="#vorteile" class="hover:text-indigo-dark transition-colors">Vorteile</a>
+      <a href="#preise" class="hover:text-indigo-dark transition-colors">Preise</a>
+      <a href="#kontakt" class="hover:text-indigo-dark transition-colors">Kontakt</a>
+    </div>
+    <a href="#kontakt" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-dark transition-colors">
+      Gratis Analyse
+    </a>
+    <button id="menu-btn" class="md:hidden p-2 text-navy" aria-label="Menü öffnen">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-slate-bg border-t border-navy/5 px-6 py-4 flex flex-col gap-4 font-medium text-sm">
+    <a href="#leistungen" class="mobile-link">Leistungen</a>
+    <a href="#vorteile" class="mobile-link">Vorteile</a>
+    <a href="#preise" class="mobile-link">Preise</a>
+    <a href="#kontakt" class="mobile-link">Kontakt</a>
+    <a href="#kontakt" class="mobile-link bg-navy text-white px-4 py-2.5 rounded-lg text-center">Gratis Analyse</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-36 pb-24 lg:pt-44 lg:pb-32 overflow-hidden bg-grid">
+  <div class="absolute inset-0 bg-gradient-to-b from-slate-bg via-slate-bg to-transparent pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative grid lg:grid-cols-2 gap-16 items-center">
+    <div>
+      <div class="inline-flex items-center gap-2 bg-emerald/10 border border-emerald/30 text-emerald px-3 py-1.5 rounded-full text-xs font-mono font-medium mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald pulse-dot"></span>
+        Für Schweizer KMUs · 100% nDSG-konform
+      </div>
+      <h1 class="font-display font-700 text-4xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight text-navy">
+        Webseiten &amp; Automation, die <span class="text-indigo-dark">unter Spannung</span> stehen.
+      </h1>
+      <p class="mt-6 text-lg text-navy-light/80 max-w-xl leading-relaxed">
+        Voltra Digital baut High-Speed Webseiten und Lead-Systeme für Handwerker, Garagen, Treuhänder und Lokalgewerbe — plus B2B-Prozessautomatisierung, die Formulare direkt in bexio, KLARA, Ihr CRM oder WhatsApp einspeist.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="#kontakt" class="inline-flex items-center gap-2 bg-indigo-dark text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors shadow-lg shadow-indigo-dark/20">
+          Kostenlose Spannungs-Analyse
+        </a>
+        <a href="#preise" class="inline-flex items-center gap-2 bg-white text-navy border border-navy/10 px-7 py-3.5 rounded-lg font-semibold hover:border-indigo-dark/40 transition-colors">
+          Preise ansehen
+        </a>
+      </div>
+      <div class="mt-10 flex items-center gap-6 text-sm text-navy-light/60 font-mono">
+        <span>⚡ Ladezeit &lt; 1s</span>
+        <span>🇨🇭 Schweizer Qualität</span>
+        <span>🔓 Keine Knebelverträge</span>
+      </div>
+    </div>
+
+    <!-- Spannungs-Check Panel -->
+    <div class="relative">
+      <div class="bg-navy rounded-2xl border border-white/10 shadow-2xl shadow-navy/30 p-6 sm:p-8">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-volt pulse-dot"></span>
+            <span class="font-mono text-xs text-volt-light tracking-wide uppercase">Live Spannungs-Check</span>
+          </div>
+          <span class="font-mono text-xs text-white/40">voltra-digital.ch</span>
+        </div>
+
+        <div class="flex items-center justify-center py-4">
+          <div class="relative w-48 h-48">
+            <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
+              <circle cx="100" cy="100" r="86" fill="none" stroke="#1E293B" stroke-width="14"/>
+              <circle id="gauge-circle" cx="100" cy="100" r="86" fill="none" stroke="#F59E0B" stroke-width="14"
+                stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" class="gauge-ring"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="gauge-number" class="font-mono font-700 text-4xl text-white">0.00</span>
+              <span class="font-mono text-xs text-white/50 mt-1">Sekunden Ladezeit</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mt-6">
+          <div class="bg-white/5 rounded-lg p-3 text-center">
+            <div class="font-mono text-emerald font-700 text-lg" id="stat-performance">--</div>
+            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Performance</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-3 text-center">
+            <div class="font-mono text-emerald font-700 text-lg" id="stat-seo">--</div>
+            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">SEO</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-3 text-center">
+            <div class="font-mono text-emerald font-700 text-lg" id="stat-access">--</div>
+            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Zugänglichkeit</div>
+          </div>
+        </div>
+        <p class="mt-5 text-xs text-white/40 font-mono text-center">Ø-Werte typischer Voltra-Projekte</p>
+      </div>
+      <div class="absolute -z-10 -top-8 -right-8 w-40 h-40 bg-volt/20 rounded-full blur-3xl"></div>
+      <div class="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-indigo/20 rounded-full blur-3xl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEISTUNGEN ============ -->
+<section id="leistungen" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-2xl mb-16 fade-up">
+      <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Leistungen</span>
+      <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Zwei Kernleistungen, ein Ziel: mehr Aufträge.</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 bg-slate-bg">
+        <div class="w-12 h-12 rounded-xl bg-indigo-dark/10 flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 9h16M9 9v11" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-display font-700 text-xl mb-3">High-Speed Webseiten &amp; Lead-Systeme</h3>
+        <p class="text-navy-light/70 leading-relaxed">
+          Blitzschnelle, mobile-first Webseiten, die Besucher in Anfragen verwandeln. Klare Struktur, starke Calls-to-Action, technisch sauber für Google — Ladezeiten unter 1 Sekunde statt trägem Baukasten.
+        </p>
+        <ul class="mt-6 space-y-2 text-sm text-navy-light/70 font-mono">
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Individuelles Design, kein Templatelook</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Lead-Formulare mit Direktversand</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> SEO- &amp; Performance-optimiert</li>
+        </ul>
+      </div>
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 bg-slate-bg">
+        <div class="w-12 h-12 rounded-xl bg-volt/10 flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="font-display font-700 text-xl mb-3">B2B-Prozessautomatisierung</h3>
+        <p class="text-navy-light/70 leading-relaxed">
+          Formulareingänge, die automatisch in bexio, KLARA, Ihr CRM, WhatsApp oder E-Mail landen. Keine manuelle Übertragung mehr, keine verlorenen Anfragen — Ihr Büroalltag läuft im Hintergrund weiter.
+        </p>
+        <ul class="mt-6 space-y-2 text-sm text-navy-light/70 font-mono">
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Anbindung an bexio &amp; KLARA</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> WhatsApp- &amp; E-Mail-Benachrichtigungen</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Individuelle CRM-Workflows</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VORTEILE ============ -->
+<section id="vorteile" class="py-24 bg-navy text-white relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-[0.06]"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+    <div class="max-w-2xl mb-16 fade-up">
+      <span class="font-mono text-xs text-volt-light uppercase tracking-widest">Vorteile</span>
+      <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Warum Schweizer KMUs auf Voltra setzen.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
+        <div class="text-2xl mb-4">🇨🇭</div>
+        <h3 class="font-display font-600 mb-2">Schweizer Qualität</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Entwicklung, Support und Ansprechpartner aus der Schweiz.</p>
+      </div>
+      <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
+        <div class="text-2xl mb-4">🔓</div>
+        <h3 class="font-display font-600 mb-2">Keine Knebelverträge</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Einmalzahlung statt Monatsabo. Wartung ist optional und jederzeit kündbar.</p>
+      </div>
+      <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
+        <div class="text-2xl mb-4">💯</div>
+        <h3 class="font-display font-600 mb-2">Transparente Festpreise</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Sie wissen vorher genau, was das Projekt kostet — keine Überraschungen.</p>
+      </div>
+      <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
+        <div class="text-2xl mb-4">🛡️</div>
+        <h3 class="font-display font-600 mb-2">100% nDSG-konform</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Datenschutz nach Schweizer Recht, sauber umgesetzt von Anfang an.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREISE ============ -->
+<section id="preise" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-2xl mb-16 fade-up">
+      <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Preise</span>
+      <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Klar kalkuliert, einmal bezahlt.</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 items-stretch">
+      <!-- Starter Web -->
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col">
+        <h3 class="font-display font-700 text-xl mb-1">Starter Web</h3>
+        <p class="text-sm text-navy-light/60 mb-6">Für den professionellen Auftritt.</p>
+        <div class="font-mono mb-6">
+          <span class="text-4xl font-700">CHF 990.–</span>
+          <span class="text-sm text-navy-light/50 block mt-1">einmalig</span>
+        </div>
+        <ul class="space-y-3 text-sm text-navy-light/75 flex-1">
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Bis zu 5 Unterseiten</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Mobile-optimiertes Design</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Kontaktformular</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Ladezeit &lt; 1 Sekunde</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Grundlegende SEO-Einrichtung</li>
+        </ul>
+        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+          Anfragen
+        </a>
+      </div>
+
+      <!-- Lead & Automation Pro -->
+      <div class="fade-up card-hover relative rounded-2xl border-2 border-volt p-8 flex flex-col bg-navy text-white shadow-xl shadow-volt/10">
+        <span class="absolute -top-3.5 left-8 bg-volt text-navy text-xs font-mono font-700 px-3 py-1 rounded-full uppercase tracking-wide">Empfohlen</span>
+        <h3 class="font-display font-700 text-xl mb-1">Lead &amp; Automation Pro</h3>
+        <p class="text-sm text-white/60 mb-6">Für Wachstum ohne manuellen Aufwand.</p>
+        <div class="font-mono mb-6">
+          <span class="text-4xl font-700 text-volt-light">CHF 2&#39;190.–</span>
+          <span class="text-sm text-white/50 block mt-1">einmalig</span>
+        </div>
+        <ul class="space-y-3 text-sm text-white/80 flex-1">
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Alles aus Starter Web</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Anbindung an bexio / KLARA / CRM</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> WhatsApp- &amp; E-Mail-Automation</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Erweiterte Lead-Erfassung</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Priorisierter Support beim Launch</li>
+        </ul>
+        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-volt text-navy px-6 py-3 rounded-lg font-semibold hover:bg-volt-light transition-colors">
+          Anfragen
+        </a>
+      </div>
+
+      <!-- Wartung -->
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col">
+        <h3 class="font-display font-700 text-xl mb-1">Wartung</h3>
+        <p class="text-sm text-navy-light/60 mb-6">Optionale Ergänzung zu jedem Paket.</p>
+        <div class="font-mono mb-6">
+          <span class="text-4xl font-700">CHF 39.–</span>
+          <span class="text-sm text-navy-light/50 block mt-1">pro Monat</span>
+        </div>
+        <ul class="space-y-3 text-sm text-navy-light/75 flex-1">
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Laufende Updates &amp; Sicherheit</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Kleinere Inhaltsänderungen</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Monitoring der Ladezeit</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Jederzeit kündbar</li>
+        </ul>
+        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+          Anfragen
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section id="kontakt" class="py-24 bg-slate-bg">
+  <div class="max-w-5xl mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16">
+      <div class="fade-up">
+        <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Kontakt</span>
+        <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 mb-6 tracking-tight">Bereit für mehr Spannung im Geschäft?</h2>
+        <p class="text-navy-light/70 leading-relaxed mb-8">
+          Schicken Sie uns kurz Ihre Eckdaten. Sie erhalten eine unverbindliche Einschätzung, was für Ihr Unternehmen sinnvoll ist — Webseite, Automatisierung oder beides.
+        </p>
+        <div class="space-y-4 font-mono text-sm">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-indigo-dark/10 flex items-center justify-center text-indigo-dark">@</span>
+            <span>hallo@voltra-digital.ch</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-indigo-dark/10 flex items-center justify-center text-indigo-dark">⏱</span>
+            <span>Antwort innert 1 Werktag</span>
+          </div>
+        </div>
+      </div>
+
+      <form id="contact-form" class="fade-up bg-white rounded-2xl border border-navy/10 p-8 space-y-5">
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="name">Name</label>
+          <input required type="text" id="name" name="name" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Ihr Name">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="company">Firma</label>
+          <input type="text" id="company" name="company" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Firmenname">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="email">E-Mail</label>
+          <input required type="email" id="email" name="email" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="ihre@email.ch">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="message">Nachricht</label>
+          <textarea id="message" name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Kurz zu Ihrem Vorhaben..."></textarea>
+        </div>
+        <button type="submit" id="submit-btn" class="w-full bg-indigo-dark text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors">
+          Anfrage senden
+        </button>
+        <p id="form-status" class="text-sm font-mono hidden"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-navy text-white/60 py-12">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-2">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#F59E0B"/></svg>
+      <span class="font-display font-600 text-white">Voltra Digital</span>
+    </div>
+    <p class="text-xs font-mono">&copy; <span id="year"></span> Voltra Digital. Alle Rechte vorbehalten.</p>
+    <div class="flex gap-6 text-xs font-mono">
+      <a href="#" class="hover:text-white transition-colors">Impressum</a>
+      <a href="#" class="hover:text-white transition-colors">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Spannungs-Check gauge animation
+  function animateGauge() {
+    const circle = document.getElementById('gauge-circle');
+    const numberEl = document.getElementById('gauge-number');
+    const circumference = 540;
+    const targetSeconds = 0.8; // demo target: sub-1-second load time
+    const maxScaleSeconds = 3; // gauge full-scale reference
+    const targetOffset = circumference * (1 - Math.min(targetSeconds / maxScaleSeconds, 1));
+
+    let start = null;
+    const duration = 1800;
+
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const currentSeconds = targetSeconds * eased;
+      numberEl.textContent = currentSeconds.toFixed(2);
+      circle.style.strokeDashoffset = circumference - (circumference - targetOffset) * eased;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        numberEl.textContent = targetSeconds.toFixed(2);
+        animateStats();
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function animateStats() {
+    const stats = [
+      { id: 'stat-performance', value: 98 },
+      { id: 'stat-seo', value: 100 },
+      { id: 'stat-access', value: 96 }
+    ];
+    stats.forEach(({ id, value }) => {
+      const el = document.getElementById(id);
+      let current = 0;
+      const step = Math.max(1, Math.round(value / 30));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= value) {
+          current = value;
+          clearInterval(interval);
+        }
+        el.textContent = current;
+      }, 25);
+    });
+  }
+
+  window.addEventListener('load', () => setTimeout(animateGauge, 300));
+
+  // Contact form submission
+  // TODO: WEBHOOK_URL ist noch leer. Auf einen echten Endpunkt zeigen lassen
+  // (z. B. n8n, Make oder Formspree), bevor die Seite live geht — sonst
+  // gehen eingehende Formular-Anfragen ins Leere.
+  const WEBHOOK_URL = '';
+
+  const form = document.getElementById('contact-form');
+  const statusEl = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!WEBHOOK_URL) {
+      console.warn('Voltra Digital: WEBHOOK_URL ist nicht konfiguriert. Formular kann nicht gesendet werden.');
+      statusEl.textContent = 'Diese Funktion ist noch nicht aktiv. Bitte kontaktieren Sie uns direkt per E-Mail.';
+      statusEl.className = 'text-sm font-mono text-volt';
+      statusEl.classList.remove('hidden');
+      return;
+    }
+
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet...';
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error('Netzwerkantwort war nicht ok');
+
+      statusEl.textContent = 'Danke! Ihre Anfrage wurde erfolgreich gesendet.';
+      statusEl.className = 'text-sm font-mono text-emerald';
+      statusEl.classList.remove('hidden');
+      form.reset();
+    } catch (err) {
+      statusEl.textContent = 'Es gab ein Problem beim Senden. Bitte versuchen Sie es erneut.';
+      statusEl.className = 'text-sm font-mono text-red-600';
+      statusEl.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+</script>
+
+</body>
+</html>
