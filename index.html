@@ -9,7 +9,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -36,15 +36,30 @@
 
 <style>
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
+  body { font-family: 'Inter', sans-serif; background: #F8FAFC; position: relative; }
   .font-display { font-family: 'Space Grotesk', sans-serif; }
   .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-  .bg-grid {
+  /* subtle grain so flat colour fields don't read as sterile/AI-flat */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* PCB-trace style background instead of a generic dot grid */
+  .bg-circuit {
     background-image:
-      linear-gradient(rgba(99,102,241,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99,102,241,0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(99,102,241,0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.10) 1px, transparent 1px),
+      radial-gradient(circle at 1px 1px, rgba(99,102,241,0.18) 1.5px, transparent 1.5px);
+    background-size: 56px 56px, 56px 56px, 56px 56px;
+    background-position: -1px -1px, -1px -1px, -1px -1px;
   }
 
   @keyframes pulse-dot {
@@ -54,20 +69,46 @@
   .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
 
   @keyframes bolt-flicker {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
-    50% { filter: drop-shadow(0 0 14px rgba(245,158,11,0.95)); }
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); }
+    50% { filter: drop-shadow(0 0 14px rgba(245,158,11,0.9)); }
   }
-  .bolt-flicker { animation: bolt-flicker 2.4s ease-in-out infinite; }
+  .bolt-flicker { animation: bolt-flicker 2.6s ease-in-out infinite; }
 
-  .gauge-ring {
-    transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  .gauge-ring { transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1); }
 
   .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
-  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(15,23,42,0.15); }
+  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -16px rgba(15,23,42,0.18); }
+
+  .card-hover-dark:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -14px rgba(245,158,11,0.25); }
 
   .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* travelling current along the Spannungs-Check panel border */
+  .current-border { position: relative; }
+  .current-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--angle, 0deg), transparent 0%, transparent 78%, #FBBF24 86%, #F59E0B 90%, transparent 94%, transparent 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate-current 5s linear infinite;
+    pointer-events: none;
+  }
+  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes rotate-current { to { --angle: 360deg; } }
+
+  .signal-divider { display: block; width: 100%; height: 2.5rem; color: inherit; }
+  @media (min-width: 768px) { .signal-divider { height: 3.25rem; } }
+
+  .btn-spark { transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; }
+  .btn-spark:hover { transform: translateY(-2px); }
+
+  .ribbon-tick { position: absolute; top: 0; left: 1.75rem; width: 2.5rem; height: 4px; border-radius: 0 0 4px 4px; }
 
   ::selection { background: #FBBF24; color: #0F172A; }
 </style>
@@ -90,7 +131,7 @@
       <a href="#preise" class="hover:text-indigo-dark transition-colors">Preise</a>
       <a href="#kontakt" class="hover:text-indigo-dark transition-colors">Kontakt</a>
     </div>
-    <a href="#kontakt" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-dark transition-colors">
+    <a href="#kontakt" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-dark transition-colors btn-spark">
       Gratis Analyse
     </a>
     <button id="menu-btn" class="md:hidden p-2 text-navy" aria-label="Menü öffnen">
@@ -107,8 +148,8 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section id="top" class="relative pt-36 pb-24 lg:pt-44 lg:pb-32 overflow-hidden bg-grid">
-  <div class="absolute inset-0 bg-gradient-to-b from-slate-bg via-slate-bg to-transparent pointer-events-none"></div>
+<section id="top" class="relative pt-36 pb-16 lg:pt-44 lg:pb-20 overflow-hidden bg-circuit">
+  <div class="absolute inset-0 bg-gradient-to-b from-slate-bg via-slate-bg/95 to-transparent pointer-events-none"></div>
   <div class="max-w-7xl mx-auto px-6 lg:px-8 relative grid lg:grid-cols-2 gap-16 items-center">
     <div>
       <div class="inline-flex items-center gap-2 bg-emerald/10 border border-emerald/30 text-emerald px-3 py-1.5 rounded-full text-xs font-mono font-medium mb-6">
@@ -116,82 +157,105 @@
         Für Schweizer KMUs · 100% nDSG-konform
       </div>
       <h1 class="font-display font-700 text-4xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight text-navy">
-        Webseiten &amp; Automation, die <span class="text-indigo-dark">unter Spannung</span> stehen.
+        Webseiten &amp; Automation, die <span class="relative inline-block text-indigo-dark">unter Spannung
+          <svg class="absolute left-0 -bottom-2 w-full h-2.5" viewBox="0 0 200 10" preserveAspectRatio="none"><path d="M0 8 L20 8 L20 2 L60 2 L60 8 L90 8 L90 2 L130 2 L130 8 L160 8 L160 2 L200 2" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        </span> stehen.
       </h1>
-      <p class="mt-6 text-lg text-navy-light/80 max-w-xl leading-relaxed">
+      <p class="mt-7 text-lg text-navy-light/80 max-w-xl leading-relaxed">
         Voltra Digital baut High-Speed Webseiten und Lead-Systeme für Handwerker, Garagen, Treuhänder und Lokalgewerbe — plus B2B-Prozessautomatisierung, die Formulare direkt in bexio, KLARA, Ihr CRM oder WhatsApp einspeist.
       </p>
       <div class="mt-9 flex flex-wrap gap-4">
-        <a href="#kontakt" class="inline-flex items-center gap-2 bg-indigo-dark text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors shadow-lg shadow-indigo-dark/20">
+        <a href="#kontakt" class="btn-spark inline-flex items-center gap-2 bg-indigo-dark text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors shadow-lg shadow-indigo-dark/25">
           Kostenlose Spannungs-Analyse
         </a>
-        <a href="#preise" class="inline-flex items-center gap-2 bg-white text-navy border border-navy/10 px-7 py-3.5 rounded-lg font-semibold hover:border-indigo-dark/40 transition-colors">
+        <a href="#preise" class="btn-spark inline-flex items-center gap-2 bg-white text-navy border border-navy/10 px-7 py-3.5 rounded-lg font-semibold hover:border-indigo-dark/40 transition-colors">
           Preise ansehen
         </a>
       </div>
-      <div class="mt-10 flex items-center gap-6 text-sm text-navy-light/60 font-mono">
-        <span>⚡ Ladezeit &lt; 1s</span>
-        <span>🇨🇭 Schweizer Qualität</span>
-        <span>🔓 Keine Knebelverträge</span>
+      <div class="mt-10 flex items-center gap-6 text-sm text-navy-light/60 font-mono flex-wrap">
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+          Ladezeit &lt; 1s
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>
+          Schweizer Qualität
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.2-2.4"/></svg>
+          Keine Knebelverträge
+        </span>
       </div>
     </div>
 
     <!-- Spannungs-Check Panel -->
     <div class="relative">
-      <div class="bg-navy rounded-2xl border border-white/10 shadow-2xl shadow-navy/30 p-6 sm:p-8">
-        <div class="flex items-center justify-between mb-6">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-volt pulse-dot"></span>
-            <span class="font-mono text-xs text-volt-light tracking-wide uppercase">Live Spannungs-Check</span>
+      <div class="current-border rounded-2xl">
+        <div class="bg-navy rounded-2xl shadow-2xl shadow-navy/30 p-6 sm:p-8 relative overflow-hidden">
+          <svg class="absolute inset-0 w-full h-full opacity-[0.06]" viewBox="0 0 400 400" preserveAspectRatio="none">
+            <path d="M0 60 H140 V20 H400 M0 180 H80 V220 H240 V140 H400 M0 320 H180 V360 H400" fill="none" stroke="#FBBF24" stroke-width="1.5"/>
+          </svg>
+          <div class="flex items-center justify-between mb-6 relative">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-volt pulse-dot"></span>
+              <span class="font-mono text-xs text-volt-light tracking-wide uppercase">Live Spannungs-Check</span>
+            </div>
+            <span class="font-mono text-xs text-white/40">voltradigital.ch</span>
           </div>
-          <span class="font-mono text-xs text-white/40">voltra-digital.ch</span>
-        </div>
 
-        <div class="flex items-center justify-center py-4">
-          <div class="relative w-48 h-48">
-            <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
-              <circle cx="100" cy="100" r="86" fill="none" stroke="#1E293B" stroke-width="14"/>
-              <circle id="gauge-circle" cx="100" cy="100" r="86" fill="none" stroke="#F59E0B" stroke-width="14"
-                stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" class="gauge-ring"/>
-            </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span id="gauge-number" class="font-mono font-700 text-4xl text-white">0.00</span>
-              <span class="font-mono text-xs text-white/50 mt-1">Sekunden Ladezeit</span>
+          <div class="flex items-center justify-center py-4 relative">
+            <div class="relative w-48 h-48">
+              <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
+                <circle cx="100" cy="100" r="86" fill="none" stroke="#1E293B" stroke-width="14"/>
+                <circle id="gauge-circle" cx="100" cy="100" r="86" fill="none" stroke="#F59E0B" stroke-width="14"
+                  stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" class="gauge-ring"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="gauge-number" class="font-mono font-700 text-4xl text-white">0.00</span>
+                <span class="font-mono text-xs text-white/50 mt-1">Sekunden Ladezeit</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="grid grid-cols-3 gap-3 mt-6">
-          <div class="bg-white/5 rounded-lg p-3 text-center">
-            <div class="font-mono text-emerald font-700 text-lg" id="stat-performance">--</div>
-            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Performance</div>
+          <div class="grid grid-cols-3 gap-3 mt-6 relative">
+            <div class="bg-white/5 rounded-lg p-3 text-center">
+              <div class="font-mono text-emerald font-700 text-lg" id="stat-performance">--</div>
+              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Performance</div>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3 text-center">
+              <div class="font-mono text-emerald font-700 text-lg" id="stat-seo">--</div>
+              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">SEO</div>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3 text-center">
+              <div class="font-mono text-emerald font-700 text-lg" id="stat-access">--</div>
+              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Zugänglichkeit</div>
+            </div>
           </div>
-          <div class="bg-white/5 rounded-lg p-3 text-center">
-            <div class="font-mono text-emerald font-700 text-lg" id="stat-seo">--</div>
-            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">SEO</div>
-          </div>
-          <div class="bg-white/5 rounded-lg p-3 text-center">
-            <div class="font-mono text-emerald font-700 text-lg" id="stat-access">--</div>
-            <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Zugänglichkeit</div>
-          </div>
+          <p class="mt-5 text-xs text-white/40 font-mono text-center relative">Ø-Werte typischer Voltra-Projekte</p>
         </div>
-        <p class="mt-5 text-xs text-white/40 font-mono text-center">Ø-Werte typischer Voltra-Projekte</p>
       </div>
       <div class="absolute -z-10 -top-8 -right-8 w-40 h-40 bg-volt/20 rounded-full blur-3xl"></div>
       <div class="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-indigo/20 rounded-full blur-3xl"></div>
     </div>
   </div>
+
+  <svg class="signal-divider text-white relative" viewBox="0 0 800 40" preserveAspectRatio="none">
+    <path d="M0 20 L60 20 L60 6 L160 6 L160 34 L260 34 L260 20 L340 20 L340 6 L440 6 L440 34 L540 34 L540 20 L620 20 L620 6 L720 6 L720 34 L800 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity="0"/>
+    <path d="M0 20 L60 20 L60 6 L160 6 L160 34 L260 34 L260 20 L340 20 L340 6 L440 6 L440 34 L540 34 L540 20 L620 20 L620 6 L720 6 L720 34 L800 34" fill="currentColor" opacity="0"/>
+    <path d="M0 40 L0 20 L60 20 L60 6 L160 6 L160 34 L260 34 L260 20 L340 20 L340 6 L440 6 L440 34 L540 34 L540 20 L620 20 L620 6 L720 6 L720 34 L800 34 L800 40 Z" fill="currentColor"/>
+  </svg>
 </section>
 
 <!-- ============ LEISTUNGEN ============ -->
-<section id="leistungen" class="py-24 bg-white">
+<section id="leistungen" class="pt-2 pb-24 bg-white">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="max-w-2xl mb-16 fade-up">
       <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Leistungen</span>
       <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Zwei Kernleistungen, ein Ziel: mehr Aufträge.</h2>
     </div>
     <div class="grid md:grid-cols-2 gap-8">
-      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 bg-slate-bg">
+      <div class="fade-up card-hover relative rounded-2xl border border-navy/10 p-8 bg-slate-bg overflow-hidden">
+        <span class="ribbon-tick bg-indigo-dark"></span>
         <div class="w-12 h-12 rounded-xl bg-indigo-dark/10 flex items-center justify-center mb-6">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 9h16M9 9v11" stroke-linecap="round"/></svg>
         </div>
@@ -205,7 +269,8 @@
           <li class="flex items-center gap-2"><span class="text-emerald">✓</span> SEO- &amp; Performance-optimiert</li>
         </ul>
       </div>
-      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 bg-slate-bg">
+      <div class="fade-up card-hover relative rounded-2xl border border-navy/10 p-8 bg-slate-bg overflow-hidden">
+        <span class="ribbon-tick bg-volt"></span>
         <div class="w-12 h-12 rounded-xl bg-volt/10 flex items-center justify-center mb-6">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke-linejoin="round"/></svg>
         </div>
@@ -224,89 +289,103 @@
 </section>
 
 <!-- ============ VORTEILE ============ -->
-<section id="vorteile" class="py-24 bg-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 bg-grid opacity-[0.06]"></div>
-  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+<section id="vorteile" class="relative bg-navy text-white overflow-hidden">
+  <svg class="signal-divider text-navy -mb-px" viewBox="0 0 800 40" preserveAspectRatio="none">
+    <path d="M0 0 L0 20 L60 20 L60 34 L160 34 L160 6 L260 6 L260 20 L340 20 L340 34 L440 34 L440 6 L540 6 L540 20 L620 20 L620 34 L720 34 L720 6 L800 6 L800 0 Z" fill="currentColor"/>
+  </svg>
+  <div class="absolute inset-0 bg-circuit opacity-[0.08]"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative pb-24">
     <div class="max-w-2xl mb-16 fade-up">
       <span class="font-mono text-xs text-volt-light uppercase tracking-widest">Vorteile</span>
       <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Warum Schweizer KMUs auf Voltra setzen.</h2>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
-        <div class="text-2xl mb-4">🇨🇭</div>
+        <div class="w-11 h-11 rounded-lg bg-volt/10 flex items-center justify-center mb-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+        </div>
         <h3 class="font-display font-600 mb-2">Schweizer Qualität</h3>
         <p class="text-sm text-white/60 leading-relaxed">Entwicklung, Support und Ansprechpartner aus der Schweiz.</p>
       </div>
       <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
-        <div class="text-2xl mb-4">🔓</div>
+        <div class="w-11 h-11 rounded-lg bg-volt/10 flex items-center justify-center mb-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.2-2.4"/></svg>
+        </div>
         <h3 class="font-display font-600 mb-2">Keine Knebelverträge</h3>
         <p class="text-sm text-white/60 leading-relaxed">Einmalzahlung statt Monatsabo. Wartung ist optional und jederzeit kündbar.</p>
       </div>
       <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
-        <div class="text-2xl mb-4">💯</div>
+        <div class="w-11 h-11 rounded-lg bg-volt/10 flex items-center justify-center mb-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><path d="M3 7l7-3 7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
         <h3 class="font-display font-600 mb-2">Transparente Festpreise</h3>
         <p class="text-sm text-white/60 leading-relaxed">Sie wissen vorher genau, was das Projekt kostet — keine Überraschungen.</p>
       </div>
       <div class="fade-up bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-volt/40 transition-colors">
-        <div class="text-2xl mb-4">🛡️</div>
+        <div class="w-11 h-11 rounded-lg bg-volt/10 flex items-center justify-center mb-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.5" fill="#FBBF24" stroke="none"/></svg>
+        </div>
         <h3 class="font-display font-600 mb-2">100% nDSG-konform</h3>
         <p class="text-sm text-white/60 leading-relaxed">Datenschutz nach Schweizer Recht, sauber umgesetzt von Anfang an.</p>
       </div>
     </div>
   </div>
+  <svg class="signal-divider text-slate-bg" viewBox="0 0 800 40" preserveAspectRatio="none">
+    <path d="M0 40 L0 20 L60 20 L60 6 L160 6 L160 34 L260 34 L260 20 L340 20 L340 6 L440 6 L440 34 L540 34 L540 20 L620 20 L620 6 L720 6 L720 34 L800 34 L800 40 Z" fill="currentColor"/>
+  </svg>
 </section>
 
 <!-- ============ PREISE ============ -->
-<section id="preise" class="py-24 bg-white">
+<section id="preise" class="pt-2 pb-24 bg-slate-bg">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="max-w-2xl mb-16 fade-up">
       <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Preise</span>
       <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Klar kalkuliert, einmal bezahlt.</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-8 items-stretch">
-      <!-- Starter Web -->
-      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col">
-        <h3 class="font-display font-700 text-xl mb-1">Starter Web</h3>
-        <p class="text-sm text-navy-light/60 mb-6">Für den professionellen Auftritt.</p>
+    <div class="grid md:grid-cols-3 gap-8 items-start">
+      <!-- Lead & Automation Pro -->
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col bg-white md:mt-6">
+        <h3 class="font-display font-700 text-xl mb-1">Lead &amp; Automation Pro</h3>
+        <p class="text-sm text-navy-light/60 mb-6">Für Wachstum ohne manuellen Aufwand.</p>
         <div class="font-mono mb-6">
-          <span class="text-4xl font-700">CHF 990.–</span>
+          <span class="text-4xl font-700">CHF 2&#39;190.–</span>
           <span class="text-sm text-navy-light/50 block mt-1">einmalig</span>
         </div>
         <ul class="space-y-3 text-sm text-navy-light/75 flex-1">
-          <li class="flex gap-2"><span class="text-emerald">✓</span> Bis zu 5 Unterseiten</li>
-          <li class="flex gap-2"><span class="text-emerald">✓</span> Mobile-optimiertes Design</li>
-          <li class="flex gap-2"><span class="text-emerald">✓</span> Kontaktformular</li>
-          <li class="flex gap-2"><span class="text-emerald">✓</span> Ladezeit &lt; 1 Sekunde</li>
-          <li class="flex gap-2"><span class="text-emerald">✓</span> Grundlegende SEO-Einrichtung</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Alles aus Starter Web</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Anbindung an bexio / KLARA / CRM</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> WhatsApp- &amp; E-Mail-Automation</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Erweiterte Lead-Erfassung</li>
+          <li class="flex gap-2"><span class="text-emerald">✓</span> Priorisierter Support beim Launch</li>
         </ul>
-        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
           Anfragen
         </a>
       </div>
 
-      <!-- Lead & Automation Pro -->
-      <div class="fade-up card-hover relative rounded-2xl border-2 border-volt p-8 flex flex-col bg-navy text-white shadow-xl shadow-volt/10">
+      <!-- Starter Web — recommended, centered -->
+      <div class="fade-up card-hover-dark relative rounded-2xl border-2 border-volt p-8 flex flex-col bg-navy text-white shadow-xl shadow-volt/10 md:scale-105">
         <span class="absolute -top-3.5 left-8 bg-volt text-navy text-xs font-mono font-700 px-3 py-1 rounded-full uppercase tracking-wide">Empfohlen</span>
-        <h3 class="font-display font-700 text-xl mb-1">Lead &amp; Automation Pro</h3>
-        <p class="text-sm text-white/60 mb-6">Für Wachstum ohne manuellen Aufwand.</p>
+        <h3 class="font-display font-700 text-xl mb-1">Starter Web</h3>
+        <p class="text-sm text-white/60 mb-6">Für den professionellen Auftritt.</p>
         <div class="font-mono mb-6">
-          <span class="text-4xl font-700 text-volt-light">CHF 2&#39;190.–</span>
+          <span class="text-4xl font-700 text-volt-light">CHF 990.–</span>
           <span class="text-sm text-white/50 block mt-1">einmalig</span>
         </div>
         <ul class="space-y-3 text-sm text-white/80 flex-1">
-          <li class="flex gap-2"><span class="text-volt-light">✓</span> Alles aus Starter Web</li>
-          <li class="flex gap-2"><span class="text-volt-light">✓</span> Anbindung an bexio / KLARA / CRM</li>
-          <li class="flex gap-2"><span class="text-volt-light">✓</span> WhatsApp- &amp; E-Mail-Automation</li>
-          <li class="flex gap-2"><span class="text-volt-light">✓</span> Erweiterte Lead-Erfassung</li>
-          <li class="flex gap-2"><span class="text-volt-light">✓</span> Priorisierter Support beim Launch</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Bis zu 5 Unterseiten</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Mobile-optimiertes Design</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Kontaktformular</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Ladezeit &lt; 1 Sekunde</li>
+          <li class="flex gap-2"><span class="text-volt-light">✓</span> Grundlegende SEO-Einrichtung</li>
         </ul>
-        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-volt text-navy px-6 py-3 rounded-lg font-semibold hover:bg-volt-light transition-colors">
+        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-volt text-navy px-6 py-3 rounded-lg font-semibold hover:bg-volt-light transition-colors">
           Anfragen
         </a>
       </div>
 
       <!-- Wartung -->
-      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col">
+      <div class="fade-up card-hover rounded-2xl border border-navy/10 p-8 flex flex-col bg-white md:mt-6">
         <h3 class="font-display font-700 text-xl mb-1">Wartung</h3>
         <p class="text-sm text-navy-light/60 mb-6">Optionale Ergänzung zu jedem Paket.</p>
         <div class="font-mono mb-6">
@@ -319,7 +398,7 @@
           <li class="flex gap-2"><span class="text-emerald">✓</span> Monitoring der Ladezeit</li>
           <li class="flex gap-2"><span class="text-emerald">✓</span> Jederzeit kündbar</li>
         </ul>
-        <a href="#kontakt" class="mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
           Anfragen
         </a>
       </div>
@@ -328,7 +407,7 @@
 </section>
 
 <!-- ============ KONTAKT ============ -->
-<section id="kontakt" class="py-24 bg-slate-bg">
+<section id="kontakt" class="py-24 bg-white">
   <div class="max-w-5xl mx-auto px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-16">
       <div class="fade-up">
@@ -340,7 +419,7 @@
         <div class="space-y-4 font-mono text-sm">
           <div class="flex items-center gap-3">
             <span class="w-8 h-8 rounded-lg bg-indigo-dark/10 flex items-center justify-center text-indigo-dark">@</span>
-            <span>hallo@voltra-digital.ch</span>
+            <span>eduard.kaba@voltradigital.ch</span>
           </div>
           <div class="flex items-center gap-3">
             <span class="w-8 h-8 rounded-lg bg-indigo-dark/10 flex items-center justify-center text-indigo-dark">⏱</span>
@@ -349,24 +428,24 @@
         </div>
       </div>
 
-      <form id="contact-form" class="fade-up bg-white rounded-2xl border border-navy/10 p-8 space-y-5">
+      <form id="contact-form" class="fade-up bg-slate-bg rounded-2xl border border-navy/10 p-8 space-y-5">
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="name">Name</label>
-          <input required type="text" id="name" name="name" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Ihr Name">
+          <input required type="text" id="name" name="name" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Ihr Name">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="company">Firma</label>
-          <input type="text" id="company" name="company" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Firmenname">
+          <input type="text" id="company" name="company" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Firmenname">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="email">E-Mail</label>
-          <input required type="email" id="email" name="email" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="ihre@email.ch">
+          <input required type="email" id="email" name="email" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="ihre@email.ch">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="message">Nachricht</label>
-          <textarea id="message" name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Kurz zu Ihrem Vorhaben..."></textarea>
+          <textarea id="message" name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Kurz zu Ihrem Vorhaben..."></textarea>
         </div>
-        <button type="submit" id="submit-btn" class="w-full bg-indigo-dark text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors">
+        <button type="submit" id="submit-btn" class="btn-spark w-full bg-indigo-dark text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors">
           Anfrage senden
         </button>
         <p id="form-status" class="text-sm font-mono hidden"></p>
