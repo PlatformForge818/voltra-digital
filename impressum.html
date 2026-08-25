@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -16,14 +16,13 @@
     theme: {
       extend: {
         colors: {
-          navy: { DEFAULT: '#0F172A', light: '#1E293B' },
-          indigo: { DEFAULT: '#6366F1', dark: '#4F46E5' },
-          volt: { DEFAULT: '#F59E0B', light: '#FBBF24' },
+          navy: { DEFAULT: '#0B1120', light: '#1B2740' },
+          volt: { DEFAULT: '#F59E0B', light: '#FBBF24', dark: '#B45309' },
           emerald: { DEFAULT: '#10B981' },
           slate: { bg: '#F8FAFC' }
         },
         fontFamily: {
-          display: ['"Space Grotesk"', 'sans-serif'],
+          display: ['"Bricolage Grotesque"', 'sans-serif'],
           body: ['Inter', 'sans-serif'],
           mono: ['"JetBrains Mono"', 'monospace']
         }
@@ -33,7 +32,7 @@
 </script>
 <style>
   body { font-family: 'Inter', sans-serif; background: #F8FAFC; }
-  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
 </style>
 </head>
 <body class="text-navy antialiased">
@@ -49,13 +48,13 @@
           <linearGradient id="boltGrad" x1="10" y1="6" x2="23" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#FBBF24"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
         </defs>
       </svg>
-      <span class="font-display font-700 text-lg">Voltra <span class="text-indigo-dark">Digital</span></span>
+      <span class="font-display font-700 text-lg">Voltra <span class="text-volt-dark">Digital</span></span>
     </a>
   </nav>
 </header>
 
 <main class="max-w-3xl mx-auto px-6 py-16">
-  <a href="/" class="font-mono text-sm text-indigo-dark hover:underline">&larr; Zurück zur Startseite</a>
+  <a href="/" class="font-mono text-sm text-volt-dark hover:underline">&larr; Zurück zur Startseite</a>
 
   <h1 class="font-display font-700 text-3xl sm:text-4xl mt-6 mb-10 tracking-tight">Impressum</h1>
 

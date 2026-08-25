@@ -10,7 +10,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -19,14 +19,13 @@
     theme: {
       extend: {
         colors: {
-          navy: { DEFAULT: '#0F172A', light: '#1E293B' },
-          indigo: { DEFAULT: '#6366F1', dark: '#4F46E5' },
-          volt: { DEFAULT: '#F59E0B', light: '#FBBF24' },
+          navy: { DEFAULT: '#0B1120', light: '#1B2740' },
+          volt: { DEFAULT: '#F59E0B', light: '#FBBF24', dark: '#B45309' },
           emerald: { DEFAULT: '#10B981' },
           slate: { bg: '#F8FAFC' }
         },
         fontFamily: {
-          display: ['"Space Grotesk"', 'sans-serif'],
+          display: ['"Bricolage Grotesque"', 'sans-serif'],
           body: ['Inter', 'sans-serif'],
           mono: ['"JetBrains Mono"', 'monospace']
         }
@@ -146,15 +145,15 @@
           </linearGradient>
         </defs>
       </svg>
-      <span class="font-display font-700 text-lg tracking-tight">Voltra <span class="text-indigo-dark">Digital</span></span>
+      <span class="font-display font-700 text-lg tracking-tight">Voltra <span class="text-volt-dark">Digital</span></span>
     </a>
     <div class="hidden md:flex items-center gap-8 font-body text-sm font-medium text-navy-light">
-      <a href="#leistungen" class="hover:text-indigo-dark transition-colors">Leistungen</a>
-      <a href="#vorteile" class="hover:text-indigo-dark transition-colors">Vorteile</a>
-      <a href="#preise" class="hover:text-indigo-dark transition-colors">Preise</a>
-      <a href="#kontakt" class="hover:text-indigo-dark transition-colors">Kontakt</a>
+      <a href="#leistungen" class="hover:text-volt-dark transition-colors">Leistungen</a>
+      <a href="#vorteile" class="hover:text-volt-dark transition-colors">Vorteile</a>
+      <a href="#preise" class="hover:text-volt-dark transition-colors">Preise</a>
+      <a href="#kontakt" class="hover:text-volt-dark transition-colors">Kontakt</a>
     </div>
-    <a href="#kontakt" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-dark transition-colors btn-spark">
+    <a href="#kontakt" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-volt hover:text-navy transition-colors btn-spark">
       Gratis Analyse
     </a>
     <button id="menu-btn" class="md:hidden p-2 text-navy" aria-label="Menü öffnen">
@@ -175,10 +174,10 @@
   <!-- atmospheric glow art -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
     <div class="absolute -top-40 -right-20 w-[32rem] h-[32rem] bg-volt/10 rounded-full blur-[100px]"></div>
-    <div class="absolute top-1/3 -left-32 w-96 h-96 bg-indigo/15 rounded-full blur-[100px]"></div>
+    <div class="absolute top-1/3 -left-32 w-96 h-96 bg-white/5 rounded-full blur-[100px]"></div>
     <span class="spark-particle absolute w-1.5 h-1.5 rounded-full bg-volt-light/80 blur-[0.5px]" style="top:22%;left:58%;animation-delay:0.2s"></span>
     <span class="spark-particle absolute w-1 h-1 rounded-full bg-white/70" style="top:38%;left:72%;animation-delay:1.1s"></span>
-    <span class="spark-particle absolute w-2 h-2 rounded-full bg-indigo/70 blur-[1px]" style="top:60%;left:52%;animation-delay:0.6s"></span>
+    <span class="spark-particle absolute w-2 h-2 rounded-full bg-volt-light/70 blur-[1px]" style="top:60%;left:52%;animation-delay:0.6s"></span>
     <span class="spark-particle absolute w-1 h-1 rounded-full bg-white/60" style="top:15%;left:40%;animation-delay:1.8s"></span>
     <span class="spark-particle absolute w-1.5 h-1.5 rounded-full bg-volt/70 blur-[0.5px]" style="top:75%;left:68%;animation-delay:0.9s"></span>
   </div>
@@ -212,7 +211,7 @@
           Ladezeit &lt; 1s
         </span>
         <span class="inline-flex items-center gap-1.5">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>
           Schweizer Qualität
         </span>
         <span class="inline-flex items-center gap-1.5">
@@ -224,6 +223,11 @@
 
     <!-- Spannungs-Check Panel -->
     <div class="relative">
+      <span class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-volt/60 pointer-events-none"></span>
+      <span class="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-volt/60 pointer-events-none"></span>
+      <span class="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-volt/60 pointer-events-none"></span>
+      <span class="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-volt/60 pointer-events-none"></span>
+      <span class="absolute -top-7 right-0 font-mono text-[10px] tracking-widest text-volt-light/50 pointer-events-none">230V · 50HZ</span>
       <div class="current-border rounded-2xl">
         <div class="bg-navy-light rounded-2xl shadow-2xl shadow-black/40 p-6 sm:p-8 relative overflow-hidden">
           <svg class="absolute inset-0 w-full h-full opacity-[0.06]" viewBox="0 0 400 400" preserveAspectRatio="none">
@@ -269,7 +273,7 @@
         </div>
       </div>
       <div class="absolute -z-10 -top-8 -right-8 w-40 h-40 bg-volt/20 rounded-full blur-3xl"></div>
-      <div class="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-indigo/20 rounded-full blur-3xl"></div>
+      <div class="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
     </div>
   </div>
 
@@ -282,14 +286,14 @@
 <section id="leistungen" class="pt-2 pb-24 bg-white">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="max-w-2xl mb-16 fade-up">
-      <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Leistungen</span>
+      <span class="font-mono text-xs text-volt-dark uppercase tracking-widest">Leistungen</span>
       <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Zwei Kernleistungen, ein Ziel: mehr Aufträge.</h2>
     </div>
     <div class="grid md:grid-cols-2 gap-8">
       <div class="fade-up card-hover relative rounded-2xl border border-navy/10 p-8 bg-slate-bg overflow-hidden">
-        <span class="ribbon-tick bg-indigo-dark"></span>
-        <div class="w-12 h-12 rounded-xl bg-indigo-dark/10 flex items-center justify-center mb-6">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 9h16M9 9v11" stroke-linecap="round"/></svg>
+        <span class="ribbon-tick bg-emerald"></span>
+        <div class="w-12 h-12 rounded-xl bg-emerald/10 flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 9h16M9 9v11" stroke-linecap="round"/></svg>
         </div>
         <h3 class="font-display font-700 text-xl mb-3">High-Speed Webseiten &amp; Lead-Systeme</h3>
         <p class="text-navy-light/70 leading-relaxed">
@@ -371,7 +375,7 @@
 <section id="preise" class="pt-2 pb-24 bg-slate-bg">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="max-w-2xl mb-16 fade-up">
-      <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Preise</span>
+      <span class="font-mono text-xs text-volt-dark uppercase tracking-widest">Preise</span>
       <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 tracking-tight">Klar kalkuliert, einmal bezahlt.</h2>
     </div>
     <div class="grid md:grid-cols-3 gap-8 items-start">
@@ -390,7 +394,7 @@
           <li class="flex gap-2"><span class="text-emerald">✓</span> Erweiterte Lead-Erfassung</li>
           <li class="flex gap-2"><span class="text-emerald">✓</span> Priorisierter Support beim Launch</li>
         </ul>
-        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-volt-dark/50 transition-colors">
           Anfragen
         </a>
       </div>
@@ -430,7 +434,7 @@
           <li class="flex gap-2"><span class="text-emerald">✓</span> Monitoring der Ladezeit</li>
           <li class="flex gap-2"><span class="text-emerald">✓</span> Jederzeit kündbar</li>
         </ul>
-        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-indigo-dark/50 transition-colors">
+        <a href="#kontakt" class="btn-spark mt-8 inline-flex justify-center items-center bg-slate-bg border border-navy/15 text-navy px-6 py-3 rounded-lg font-semibold hover:border-volt-dark/50 transition-colors">
           Anfragen
         </a>
       </div>
@@ -443,14 +447,14 @@
   <div class="max-w-5xl mx-auto px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-16">
       <div class="fade-up">
-        <span class="font-mono text-xs text-indigo-dark uppercase tracking-widest">Kontakt</span>
+        <span class="font-mono text-xs text-volt-dark uppercase tracking-widest">Kontakt</span>
         <h2 class="font-display font-700 text-3xl sm:text-4xl mt-3 mb-6 tracking-tight">Bereit für mehr Spannung im Geschäft?</h2>
         <p class="text-navy-light/70 leading-relaxed mb-8">
           Schicken Sie uns kurz Ihre Eckdaten. Sie erhalten eine unverbindliche Einschätzung, was für Ihr Unternehmen sinnvoll ist — Webseite, Automatisierung oder beides.
         </p>
         <div class="space-y-4 font-mono text-sm">
           <div class="flex items-center gap-3">
-            <span class="w-8 h-8 rounded-lg bg-indigo-dark/10 flex items-center justify-center text-indigo-dark">@</span>
+            <span class="w-8 h-8 rounded-lg bg-volt/15 flex items-center justify-center text-volt-dark">@</span>
             <span>eduard.kaba@voltradigital.ch</span>
           </div>
         </div>
@@ -459,21 +463,21 @@
       <form id="contact-form" class="fade-up bg-slate-bg rounded-2xl border border-navy/10 p-8 space-y-5">
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="name">Name</label>
-          <input required type="text" id="name" name="name" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Ihr Name">
+          <input required type="text" id="name" name="name" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-volt/40 focus:border-volt-dark transition-shadow" placeholder="Ihr Name">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="company">Firma</label>
-          <input type="text" id="company" name="company" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Firmenname">
+          <input type="text" id="company" name="company" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-volt/40 focus:border-volt-dark transition-shadow" placeholder="Firmenname">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="email">E-Mail</label>
-          <input required type="email" id="email" name="email" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="ihre@email.ch">
+          <input required type="email" id="email" name="email" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-volt/40 focus:border-volt-dark transition-shadow" placeholder="ihre@email.ch">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-wide text-navy-light/60 mb-1.5" for="message">Nachricht</label>
-          <textarea id="message" name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-dark/40 focus:border-indigo-dark transition-shadow" placeholder="Kurz zu Ihrem Vorhaben..."></textarea>
+          <textarea id="message" name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-navy/15 bg-white focus:outline-none focus:ring-2 focus:ring-volt/40 focus:border-volt-dark transition-shadow" placeholder="Kurz zu Ihrem Vorhaben..."></textarea>
         </div>
-        <button type="submit" id="submit-btn" class="btn-spark w-full bg-indigo-dark text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-navy transition-colors">
+        <button type="submit" id="submit-btn" class="btn-spark w-full bg-volt text-navy px-6 py-3.5 rounded-lg font-semibold hover:bg-volt-light transition-colors">
           Anfrage senden
         </button>
         <p id="form-status" class="text-sm font-mono hidden"></p>
@@ -502,6 +506,9 @@
       <a href="/impressum.html" class="hover:text-white transition-colors">Impressum</a>
       <a href="/datenschutz.html" class="hover:text-white transition-colors">Datenschutz</a>
     </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-8 pt-6 border-t border-white/10">
+    <p class="text-[11px] font-mono tracking-widest text-white/30 uppercase">CH-8902 Urdorf · 230V / 50HZ · Ladezeit &lt; 1s</p>
   </div>
 </footer>
 
