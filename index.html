@@ -7,11 +7,6 @@
 <meta name="description" content="Voltra Digital baut High-Speed Webseiten und B2B-Prozessautomatisierung für Schweizer KMUs. Transparente Festpreise, 100% nDSG-konform, Ladezeiten unter 1 Sekunde.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='9' fill='%230B132B'/%3E%3Cpath d='M18.5 6L10 18h5.3l-1.4 10.2L23.2 15h-5.4l0.7-9z' fill='%23CCFF00'/%3E%3C/svg%3E">
 
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
 <!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -35,6 +30,28 @@
 </script>
 
 <style>
+  @font-face {
+    font-family: 'Bricolage Grotesque';
+    font-style: normal;
+    font-weight: 500 800;
+    font-display: swap;
+    src: url('fonts/bricolage-grotesque.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/inter.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/jetbrains-mono.woff2') format('woff2');
+  }
+
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; background: #F4F6F8; position: relative; }
   .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
