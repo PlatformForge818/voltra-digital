@@ -465,11 +465,8 @@
 
   window.addEventListener('load', () => setTimeout(animateGauge, 300));
 
-  // Contact form submission
-  // TODO: WEBHOOK_URL ist noch leer. Auf einen echten Endpunkt zeigen lassen
-  // (z. B. n8n, Make oder Formspree), bevor die Seite live geht — sonst
-  // gehen eingehende Formular-Anfragen ins Leere.
-  const WEBHOOK_URL = '';
+  // Contact form submission — Formspree endpoint
+  const WEBHOOK_URL = 'https://formspree.io/f/mwledazy';
 
   const form = document.getElementById('contact-form');
   const statusEl = document.getElementById('form-status');
@@ -495,7 +492,7 @@
     try {
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       });
 
