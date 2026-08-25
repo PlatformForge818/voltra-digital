@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impressum — Voltra Digital</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='9' fill='%230F172A'/%3E%3Cpath d='M18.5 6L10 18h5.3l-1.4 10.2L23.2 15h-5.4l0.7-9z' fill='%23F59E0B'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +41,14 @@
 <header class="border-b border-navy/5 bg-white">
   <nav class="max-w-3xl mx-auto px-6 h-16 flex items-center gap-2">
     <a href="/" class="flex items-center gap-2">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#F59E0B" stroke="#0F172A" stroke-width="0.5" stroke-linejoin="round"/></svg>
+      <svg width="30" height="30" viewBox="0 0 34 34" fill="none">
+        <rect width="34" height="34" rx="9" fill="url(#tileGrad)"/>
+        <path d="M18.5 6L10 18h5.3l-1.4 10.2L23.2 15h-5.4l0.7-9z" fill="url(#boltGrad)"/>
+        <defs>
+          <linearGradient id="tileGrad" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#1E293B"/><stop offset="1" stop-color="#0F172A"/></linearGradient>
+          <linearGradient id="boltGrad" x1="10" y1="6" x2="23" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#FBBF24"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
+        </defs>
+      </svg>
       <span class="font-display font-700 text-lg">Voltra <span class="text-indigo-dark">Digital</span></span>
     </a>
   </nav>
