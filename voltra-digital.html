@@ -139,8 +139,6 @@
   }
   .bolt-flicker { animation: bolt-flicker 2.6s ease-in-out infinite; }
 
-  .gauge-ring { transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1); }
-
   .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
   .card-hover:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -16px rgba(15,23,42,0.18); }
 
@@ -275,7 +273,7 @@
       </div>
     </div>
 
-    <!-- Spannungs-Check Panel -->
+    <!-- Ablauf Panel -->
     <div class="relative">
       <span class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-volt/60 pointer-events-none"></span>
       <span class="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-volt/60 pointer-events-none"></span>
@@ -287,43 +285,34 @@
           <svg class="absolute inset-0 w-full h-full opacity-[0.06]" viewBox="0 0 400 400" preserveAspectRatio="none">
             <path d="M0 60 H140 V20 H400 M0 180 H80 V220 H240 V140 H400 M0 320 H180 V360 H400" fill="none" stroke="#DFFF4D" stroke-width="1.5"/>
           </svg>
-          <div class="flex items-center justify-between mb-6 relative">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-volt pulse-dot"></span>
-              <span class="font-mono text-xs text-volt-light tracking-wide uppercase">Live Spannungs-Check</span>
-            </div>
-            <span class="font-mono text-xs text-white/40">voltradigital.ch</span>
+          <div class="flex items-center gap-2 mb-8 relative">
+            <span class="w-2 h-2 rounded-full bg-volt pulse-dot"></span>
+            <span class="font-mono text-xs text-volt-light tracking-wide uppercase">So läuft's ab</span>
           </div>
 
-          <div class="flex items-center justify-center py-4 relative">
-            <div class="relative w-48 h-48">
-              <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
-                <circle cx="100" cy="100" r="86" fill="none" stroke="#0B132B" stroke-width="14"/>
-                <circle id="gauge-circle" cx="100" cy="100" r="86" fill="none" stroke="#CCFF00" stroke-width="14"
-                  stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" class="gauge-ring"/>
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center">
-                <span id="gauge-number" class="font-mono font-700 text-4xl text-white">0.00</span>
-                <span class="font-mono text-xs text-white/50 mt-1">Sekunden Ladezeit</span>
+          <div class="space-y-6 relative">
+            <div class="flex items-start gap-4">
+              <span class="font-mono font-700 text-volt text-lg w-8 shrink-0">01</span>
+              <div>
+                <h3 class="font-display font-700 text-white">Kurzes Gespräch</h3>
+                <p class="text-white/50 text-sm mt-1">Wir klären Ziel, Umfang und Preis — unverbindlich.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="font-mono font-700 text-volt text-lg w-8 shrink-0">02</span>
+              <div>
+                <h3 class="font-display font-700 text-white">Entwurf</h3>
+                <p class="text-white/50 text-sm mt-1">Sie erhalten einen fertigen Vorschlag zum Ansehen, bevor etwas fix ist.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="font-mono font-700 text-volt text-lg w-8 shrink-0">03</span>
+              <div>
+                <h3 class="font-display font-700 text-white">Live</h3>
+                <p class="text-white/50 text-sm mt-1">Nach Freigabe geht Ihre Website online — fixfertig, zum Fixpreis.</p>
               </div>
             </div>
           </div>
-
-          <div class="grid grid-cols-3 gap-3 mt-6 relative">
-            <div class="bg-white/5 rounded-lg p-3 text-center">
-              <div class="font-mono text-emerald font-700 text-lg" id="stat-performance">--</div>
-              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Performance</div>
-            </div>
-            <div class="bg-white/5 rounded-lg p-3 text-center">
-              <div class="font-mono text-emerald font-700 text-lg" id="stat-seo">--</div>
-              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">SEO</div>
-            </div>
-            <div class="bg-white/5 rounded-lg p-3 text-center">
-              <div class="font-mono text-emerald font-700 text-lg" id="stat-access">--</div>
-              <div class="text-[10px] uppercase tracking-wide text-white/40 mt-1">Zugänglichkeit</div>
-            </div>
-          </div>
-          <p class="mt-5 text-xs text-white/40 font-mono text-center relative">Ø-Werte typischer Voltra-Projekte</p>
         </div>
       </div>
       <div class="absolute -z-10 -top-8 -right-8 w-40 h-40 bg-volt/20 rounded-full blur-3xl"></div>
@@ -588,58 +577,6 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  // Spannungs-Check gauge animation
-  function animateGauge() {
-    const circle = document.getElementById('gauge-circle');
-    const numberEl = document.getElementById('gauge-number');
-    const circumference = 540;
-    const targetSeconds = 0.8; // demo target: sub-1-second load time
-    const maxScaleSeconds = 3; // gauge full-scale reference
-    const targetOffset = circumference * (1 - Math.min(targetSeconds / maxScaleSeconds, 1));
-
-    let start = null;
-    const duration = 1800;
-
-    function step(timestamp) {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const currentSeconds = targetSeconds * eased;
-      numberEl.textContent = currentSeconds.toFixed(2);
-      circle.style.strokeDashoffset = circumference - (circumference - targetOffset) * eased;
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        numberEl.textContent = targetSeconds.toFixed(2);
-        animateStats();
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
-  function animateStats() {
-    const stats = [
-      { id: 'stat-performance', value: 98 },
-      { id: 'stat-seo', value: 100 },
-      { id: 'stat-access', value: 96 }
-    ];
-    stats.forEach(({ id, value }) => {
-      const el = document.getElementById(id);
-      let current = 0;
-      const step = Math.max(1, Math.round(value / 30));
-      const interval = setInterval(() => {
-        current += step;
-        if (current >= value) {
-          current = value;
-          clearInterval(interval);
-        }
-        el.textContent = current;
-      }, 25);
-    });
-  }
-
-  window.addEventListener('load', () => setTimeout(animateGauge, 300));
 
   // Contact form submission — Formspree endpoint
   const WEBHOOK_URL = 'https://formspree.io/f/mwledazy';
